@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:lekbeshimuneservices/screens/feeds_screen.dart';
 import 'package:lekbeshimuneservices/widgets/appbar.dart';
 import 'package:lekbeshimuneservices/widgets/bottomnavigation.dart';
 import 'package:lekbeshimuneservices/widgets/navigationdrawer.dart';
@@ -15,6 +16,9 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int cIndex = 0;
+  final Screens = <Widget>[
+    FeedsScreen(),
+  ];
   void updateState(int index) {
     setState(() {
       cIndex = index;
@@ -26,9 +30,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: WidgetAppBar(title: 'Dashboard'),
       drawer: AppDrawer(),
-      body: Center(
-        child: Text('dfdf'),
-      ),
+      body: Screens[cIndex],
       bottomNavigationBar:
           AppBottomNavBar(selectedIndex: cIndex, onClicked: updateState),
     );
