@@ -16,7 +16,7 @@ class AppBottomNavBar extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.feed),
+          icon: Icon(Icons.rss_feed),
           label: 'Feed',
         ),
         const BottomNavigationBarItem(
