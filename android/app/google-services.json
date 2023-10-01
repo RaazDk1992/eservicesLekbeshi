@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "241750536649",
+    "project_id": "eservicenotifications-78b8b",
+    "storage_bucket": "eservicenotifications-78b8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241750536649:android:2d6c3182f0d324d3617818",
+        "android_client_info": {
+          "package_name": "gov.lekbeshimun.lekbeshimuneservices"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj3vrAqubLO7hrJogzv179bPTkiJtTS6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
