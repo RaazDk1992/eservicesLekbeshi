@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-Articles articlesFromJson(String str) => Articles.fromJson(json.decode(str));
+Articles articleFromJson(String str) => Articles.fromJson(json.decode(str));
 
-String articlesToJson(Articles data) => json.encode(data.toJson());
+String articleToJson(Articles data) => json.encode(data.toJson());
 
 class Articles {
   Articles({
@@ -27,31 +27,31 @@ class Articles {
 class Datum {
   Datum({
     required this.title,
-    required this.body,
-    required this.image,
-    required this.document,
     required this.published_date,
+    this.body,
+    this.image,
+    this.document,
   });
 
-  final int title;
-  final String body;
-  final String image;
-  final String document;
+  final String title;
   final String published_date;
+  final String? body;
+  final String? document;
+  final String? image;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         title: json["title"],
-        body: json["body"],
-        image: json["image"],
-        document: json["document"],
         published_date: json["published_date"],
+        body: json["body"],
+        document: json["document"],
+        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
         "title": title,
-        "body": body,
-        "image": image,
-        "document": document,
         "published_date": published_date,
+        "body": body,
+        "document": document,
+        "image": image,
       };
 }

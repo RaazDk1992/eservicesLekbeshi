@@ -5,6 +5,8 @@ import 'package:lekbeshimuneservices/screens/feeds_screen.dart';
 import 'package:lekbeshimuneservices/widgets/appbar.dart';
 import 'package:lekbeshimuneservices/widgets/bottomnavigation.dart';
 import 'package:lekbeshimuneservices/widgets/navigationdrawer.dart';
+import 'package:lekbeshimuneservices/workers/articles_provider.dart';
+import 'package:provider/provider.dart';
 import '../theme.dart';
 
 class Dashboard extends StatefulWidget {
@@ -27,12 +29,15 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: WidgetAppBar(title: 'Dashboard'),
-      drawer: AppDrawer(),
-      body: Screens[cIndex],
-      bottomNavigationBar:
-          AppBottomNavBar(selectedIndex: cIndex, onClicked: updateState),
+    return ChangeNotifierProvider(
+      create: (context) => ArticleProvider(),
+      child: Scaffold(
+        appBar: WidgetAppBar(title: 'Dashboard'),
+        drawer: AppDrawer(),
+        body: Screens[cIndex],
+        bottomNavigationBar:
+            AppBottomNavBar(selectedIndex: cIndex, onClicked: updateState),
+      ),
     );
   }
 }
