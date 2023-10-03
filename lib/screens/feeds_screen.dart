@@ -21,7 +21,10 @@ class FeedsScreen extends StatelessWidget {
           ? getLoadingUI()
           : provider.error.isNotEmpty
               ? getErrorUI(provider.error)
-              : getBodyUI(provider.a, context),
+              : Container(
+                  margin: const EdgeInsets.only(top: 10.0),
+                  child: getBodyUI(provider.a, context),
+                ),
     );
   }
 
@@ -43,41 +46,31 @@ class FeedsScreen extends StatelessWidget {
   getBodyUI(Articles a, BuildContext context) {
     return ListView.builder(
         itemCount: a.data.length,
-        itemBuilder: (context, index) => buildTile(a, a.data.length));
+        itemBuilder: (context, index) => ListTile(
+              onTap: () => {print("tap..")},
+              leading: Container(
+                width: 50.0,
+                child: Center(
+                  child: Text(
+                    getSubstring(a.data[index].published_date.toString()),
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.redAccent),
+                  ),
+                ),
+              ),
+              title: Text(a.data[index].title),
+              subtitle: IntrinsicWidth(
+                child: Container(
+                  height: 20.0,
+                  color: Colors.black38,
+                ),
+              ),
+            ));
   }
 
-  buildTile(Articles a, int last) {
-    final _random = Random();
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: InkWell(
-        onTap: () {},
-        child: Container(
-          padding: EdgeInsets.all(20.0),
-          margin: EdgeInsets.all(5.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25.0),
-                    color: Colors.indigo),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 5.0),
-                width: 300,
-                height: 100,
-                decoration: BoxDecoration(
-                    border: Border(
-                        left: BorderSide(width: 10, color: Colors.indigo))),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+  String getSubstring(String x) {
+    int index = x.indexOf(' ');
+    int last = x.indexOf(' ', index + 1);
+    return x.substring(0, last) + "\n Ago";
   }
 }
