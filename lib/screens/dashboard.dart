@@ -22,8 +22,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int cIndex = 0;
   final Screens = <Widget>[
-    FeedsScreen(),
     CarouselScreen(),
+    FeedsScreen(),
   ];
   void updateState(int index) {
     setState(() {

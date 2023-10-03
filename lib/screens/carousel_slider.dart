@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -54,29 +55,37 @@ class CarouselScreen extends StatelessWidget {
               builder: (context, CarouselProvider carouselProvider, child) =>
                   CarouselSlider.builder(
                       itemCount: provider.a.data.length,
-                      itemBuilder: ((context, index, realIndex) => Container(
-                            child: Card(
+                      itemBuilder: ((context, index, realIndex) => Card(
+                            elevation: 10,
+                            child: Container(
+                              padding: EdgeInsets.all(2.0),
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                                mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
-                                  const ListTile(
-                                    leading: Icon(Icons.place),
-                                    title: Text('Ha Long Bay'),
-                                    subtitle: Text(
-                                        'Halong Bay is a UNESCO World Heritage Site and a popular tourist destination'),
+                                  CachedNetworkImage(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    imageUrl: stripUrl(
+                                        provider.a.data[index].slider_image),
+                                    fit: BoxFit.contain,
                                   ),
                                   Container(
                                     alignment: Alignment.center,
+                                    padding: EdgeInsets.all(2.0),
+                                    child: Text(
+                                      provider.a.data[index].Title,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
                                   ),
                                   ButtonBarTheme(
                                     // make buttons use the appropriate styles for cards
                                     data: ButtonBarThemeData(),
                                     child: ButtonBar(
                                       children: <Widget>[
-                                        TextButton(
-                                          child: const Text('Add to Bookmark'),
-                                          onPressed: () {},
-                                        ),
                                         TextButton(
                                           child: const Text('Show More'),
                                           onPressed: () {},
@@ -86,7 +95,6 @@ class CarouselScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              elevation: 10,
                             ),
                           )),
                       options: CarouselOptions(
@@ -110,9 +118,17 @@ class CarouselScreen extends StatelessWidget {
     );
   }
 
-  String getSubstring(String x) {
-    int index = x.indexOf(' ');
-    int last = x.indexOf(' ', index + 1);
-    return x.substring(0, last) + "\n Ago";
+  stripUrl(String data) {
+    RegExp exp =
+        new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+    var url = exp.firstMatch(data);
+    var txt = url?.group(0);
+    if (txt == null) {
+      txt =
+          'https://lekbeshimun.gov.np/sites/lekbeshimun.gov.np/files/default.png';
+    }
+
+    print(url!.end);
+    return txt;
   }
 }
