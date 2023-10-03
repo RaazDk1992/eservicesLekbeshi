@@ -1,21 +1,32 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:lekbeshimuneservices/models/articles_model.dart';
-import 'package:lekbeshimuneservices/workers/articles_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
-class FeedsScreen extends StatelessWidget {
+import '../models/articles_model.dart';
+import '../workers/articles_provider.dart';
+
+class FeedsScreen extends StatefulWidget {
   const FeedsScreen({super.key});
+
+  @override
+  State<FeedsScreen> createState() => _FeedsScreenState();
+}
+
+class _FeedsScreenState extends State<FeedsScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final provider = Provider.of<ArticleProvider>(context, listen: false);
+
+    provider.getDataFromAPI();
+  }
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<ArticleProvider>(context);
-    provider.getDataFromAPI();
     return Container(
       child: provider.is_loading
           ? getLoadingUI()
@@ -29,6 +40,7 @@ class FeedsScreen extends StatelessWidget {
   }
 
   getLoadingUI() {
+    print("-------------loading ui-----------------------");
     return Center(
       child: SpinKitRotatingCircle(
         color: Colors.green,
