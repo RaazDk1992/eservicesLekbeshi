@@ -44,8 +44,7 @@ class FeedsScreen extends StatelessWidget {
   }
 
   getBodyUI(Articles a, BuildContext context) {
-    return ListView.builder(
-        itemCount: a.data.length,
+    return ListView.separated(
         itemBuilder: (context, index) => ListTile(
               onTap: () => {print("tap..")},
               leading: Container(
@@ -65,7 +64,13 @@ class FeedsScreen extends StatelessWidget {
                   color: Colors.black38,
                 ),
               ),
-            ));
+            ),
+        separatorBuilder: (context, index) {
+          return Divider(
+            color: Colors.amber,
+          );
+        },
+        itemCount: a.data.length);
   }
 
   String getSubstring(String x) {
