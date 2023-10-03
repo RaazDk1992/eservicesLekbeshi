@@ -50,66 +50,61 @@ class CarouselScreen extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Column(
         children: [
-          Expanded(
-              child: Consumer(
-                  builder: (context, CarouselProvider carouselProvider,
-                          child) =>
-                      CarouselSlider.builder(
-                          itemCount: provider.a.data.length,
-                          itemBuilder: ((context, index, realIndex) =>
-                              Container(
-                                child: Card(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      const ListTile(
-                                        leading: Icon(Icons.place),
-                                        title: Text('Ha Long Bay'),
-                                        subtitle: Text(
-                                            'Halong Bay is a UNESCO World Heritage Site and a popular tourist destination'),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.center,
-                                      ),
-                                      ButtonBarTheme(
-                                        // make buttons use the appropriate styles for cards
-                                        data: ButtonBarThemeData(),
-                                        child: ButtonBar(
-                                          children: <Widget>[
-                                            TextButton(
-                                              child:
-                                                  const Text('Add to Bookmark'),
-                                              onPressed: () {},
-                                            ),
-                                            TextButton(
-                                              child: const Text('Show More'),
-                                              onPressed: () {},
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+          Consumer(
+              builder: (context, CarouselProvider carouselProvider, child) =>
+                  CarouselSlider.builder(
+                      itemCount: provider.a.data.length,
+                      itemBuilder: ((context, index, realIndex) => Container(
+                            child: Card(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const ListTile(
+                                    leading: Icon(Icons.place),
+                                    title: Text('Ha Long Bay'),
+                                    subtitle: Text(
+                                        'Halong Bay is a UNESCO World Heritage Site and a popular tourist destination'),
                                   ),
-                                  elevation: 10,
-                                ),
-                              )),
-                          options: CarouselOptions(
-                            height: 400,
-                            aspectRatio: 16 / 9,
-                            viewportFraction: 0.8,
-                            initialPage: 0,
-                            enableInfiniteScroll: true,
-                            reverse: false,
-                            autoPlay: true,
-                            autoPlayInterval: Duration(seconds: 3),
-                            autoPlayAnimationDuration:
-                                Duration(milliseconds: 800),
-                            autoPlayCurve: Curves.fastOutSlowIn,
-                            enlargeCenterPage: true,
-                            enlargeFactor: 0.3,
-                            //onPageChanged: callbackFunction,
-                            scrollDirection: Axis.horizontal,
-                          )))),
+                                  Container(
+                                    alignment: Alignment.center,
+                                  ),
+                                  ButtonBarTheme(
+                                    // make buttons use the appropriate styles for cards
+                                    data: ButtonBarThemeData(),
+                                    child: ButtonBar(
+                                      children: <Widget>[
+                                        TextButton(
+                                          child: const Text('Add to Bookmark'),
+                                          onPressed: () {},
+                                        ),
+                                        TextButton(
+                                          child: const Text('Show More'),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              elevation: 10,
+                            ),
+                          )),
+                      options: CarouselOptions(
+                        height: 400,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.8,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.3,
+                        //onPageChanged: callbackFunction,
+                        scrollDirection: Axis.horizontal,
+                      ))),
         ],
       ),
     );
