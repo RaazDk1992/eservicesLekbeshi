@@ -12,6 +12,8 @@ class ArticleProvider extends ChangeNotifier {
   bool errorStatus = false;
   List<Articles> ab = [];
   Articles a = Articles(data: []);
+  Articles sa = Articles(data: []);
+  String searchString = '';
   setError(bool status) {
     this.errorStatus = status;
   }
@@ -39,12 +41,30 @@ class ArticleProvider extends ChangeNotifier {
         setError(true);
         error = r.statusCode.toString();
       }
-    } catch (e, stacktrace) {
+    } catch (e) {
       setError(true);
-      print("error: " + e.toString() + "," + stacktrace.toString());
+      // print("error: " + e.toString() + "," + stacktrace.toString());
       error = e.toString();
     }
     is_loading = false;
+    updateData();
+  }
+
+  updateData() {
+    sa.data.clear();
+    if (searchString.isEmpty) {
+      sa.data.addAll(a.data);
+    } else {
+      sa.data.addAll(a.data
+          .where((element) =>
+              element.published_date.toLowerCase().contains(searchString))
+          .toList());
+    }
     notifyListeners();
+  }
+
+  makeSearch(String search_text) {
+    searchString = search_text;
+    updateData();
   }
 }

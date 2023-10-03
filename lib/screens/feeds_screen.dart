@@ -34,7 +34,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
               ? getErrorUI(provider.error)
               : Container(
                   margin: const EdgeInsets.only(top: 10.0),
-                  child: getBodyUI(provider.a, context),
+                  child: getBodyUI(context),
                 ),
     );
   }
@@ -55,34 +55,59 @@ class _FeedsScreenState extends State<FeedsScreen> {
     );
   }
 
-  getBodyUI(Articles a, BuildContext context) {
-    return ListView.separated(
-        itemBuilder: (context, index) => ListTile(
-              onTap: () => {print("tap..")},
-              leading: Container(
-                width: 50.0,
-                child: Center(
-                  child: Text(
-                    getSubstring(a.data[index].published_date.toString()),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.redAccent),
-                  ),
-                ),
-              ),
-              title: Text(a.data[index].title),
-              subtitle: IntrinsicWidth(
-                child: Container(
-                  height: 20.0,
-                  color: Colors.black38,
-                ),
-              ),
-            ),
-        separatorBuilder: (context, index) {
-          return Divider(
-            color: Colors.amber,
-          );
-        },
-        itemCount: a.data.length);
+  getBodyUI(BuildContext context) {
+    final provider = Provider.of<ArticleProvider>(context, listen: false);
+
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.all(3.0),
+          padding: EdgeInsets.all(2.0),
+          child: TextField(
+            decoration: InputDecoration(
+                hintText: 'Search',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                suffixIcon: Icon(Icons.search)),
+            onChanged: (value) => provider.makeSearch(value),
+          ),
+        ),
+        Expanded(
+            child: Consumer(
+          builder: (context, ArticleProvider articleProvider, child) =>
+              ListView.separated(
+                  itemBuilder: (context, index) => ListTile(
+                        onTap: () => {print("tap..")},
+                        leading: Container(
+                          width: 50.0,
+                          child: Center(
+                            child: Text(
+                              getSubstring(articleProvider
+                                  .sa.data[index].published_date
+                                  .toString()),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.redAccent),
+                            ),
+                          ),
+                        ),
+                        title: Text(articleProvider.sa.data[index].title),
+                        subtitle: IntrinsicWidth(
+                          child: Container(
+                            height: 20.0,
+                            color: Colors.black38,
+                          ),
+                        ),
+                      ),
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      color: Colors.amber,
+                    );
+                  },
+                  itemCount: articleProvider.sa.data.length),
+        )),
+      ],
+    );
   }
 
   String getSubstring(String x) {
