@@ -47,8 +47,7 @@ class CarouselScreen extends StatelessWidget {
   getBodyUI(BuildContext context) {
     final provider = Provider.of<CarouselProvider>(context, listen: false);
 
-    return Align(
-      alignment: Alignment.topCenter,
+    return Expanded(
       child: Column(
         children: [
           Consumer(
@@ -113,6 +112,63 @@ class CarouselScreen extends StatelessWidget {
                         //onPageChanged: callbackFunction,
                         scrollDirection: Axis.horizontal,
                       ))),
+          const SizedBox(
+            height: 10.0,
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.all(5.0),
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(0.0),
+                crossAxisSpacing: 5.0,
+                crossAxisCount: 3,
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0))),
+                      child: Column(
+                        children: [],
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5.0)),
+                        color: Colors.amber,
+                      ),
+                      child: Column(
+                        children: [],
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5.0)),
+                        color: Colors.amber,
+                      ),
+                      child: Column(
+                        children: [],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
