@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +79,18 @@ class _FeedsScreenState extends State<FeedsScreen> {
           builder: (context, ArticleProvider articleProvider, child) =>
               ListView.separated(
                   itemBuilder: (context, index) => ListTile(
-                        onTap: () => {print("tap..")},
+                        onTap: () {
+                          String x = provider.a.data[index].body.toString();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DetailedArticle(
+                                      id: provider.a.data[index].node),
+                                  settings: RouteSettings(arguments: {
+                                    'articleId':
+                                        provider.a.data[index].node.toString()
+                                  })));
+                        },
                         leading: Container(
                           width: 50.0,
                           child: Center(

@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:lekbeshimuneservices/firebase/firebase_setup.dart';
 import 'package:lekbeshimuneservices/firebase/local_notification.dart';
+import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:lekbeshimuneservices/screens/dashboard.dart';
 import 'package:lekbeshimuneservices/screens/home.dart';
 import 'package:lekbeshimuneservices/screens/login_screen.dart';
@@ -51,6 +52,11 @@ class _MainWindowState extends State<MainWindow> {
     // For Forground State
 
     return MaterialApp(
+      initialRoute: "/dashboard",
+      routes: {
+        "/dashboard": (context) => Dashboard(),
+        "/detailed-article": (context) => DetailedArticle(),
+      },
       debugShowCheckedModeBanner: false,
       home: Dashboard(),
     );

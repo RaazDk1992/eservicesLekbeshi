@@ -28,11 +28,13 @@ class Datum {
   Datum({
     required this.title,
     required this.published_date,
+    required this.node,
     this.body,
     this.image,
     this.document,
   });
 
+  final String node;
   final String title;
   final String published_date;
   final String? body;
@@ -42,6 +44,7 @@ class Datum {
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         title: json["title"],
         published_date: json["published_date"],
+        node: json["node"],
         body: json["body"],
         document: json["documents"],
         image: json["image"],
@@ -53,5 +56,6 @@ class Datum {
         "body": body,
         "documents": document,
         "image": image,
+        "node": node,
       };
 }
