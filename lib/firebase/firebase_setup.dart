@@ -23,6 +23,6 @@ class FirebaseSetup {
       LocalNotification.showNotification(message);
     });
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessages);
-    print(_fcmToken);
+    print("Tokenn..." + _fcmToken.toString());
   }
 }

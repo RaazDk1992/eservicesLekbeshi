@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lekbeshimuneservices/workers/carousel_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -133,7 +134,18 @@ class CarouselScreen extends StatelessWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(5.0))),
                       child: Column(
-                        children: [],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.book,
+                            color: Colors.white,
+                            size: 40.0,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          Text('data')
+                        ],
                       ),
                     ),
                   ),
@@ -168,7 +180,7 @@ class CarouselScreen extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

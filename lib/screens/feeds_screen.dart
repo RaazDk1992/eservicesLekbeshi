@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-
 import '../models/articles_model.dart';
 import '../workers/articles_provider.dart';
 
@@ -91,11 +90,40 @@ class _FeedsScreenState extends State<FeedsScreen> {
                             ),
                           ),
                         ),
-                        title: Text(articleProvider.sa.data[index].title),
+                        title: Text(provider.a.data[index].title),
                         subtitle: IntrinsicWidth(
                           child: Container(
-                            height: 20.0,
-                            color: Colors.black38,
+                            height: 50.0,
+                            child: Row(
+                              children: [
+                                if (provider.a.data[index].image != '')
+                                  Container(
+                                    margin: EdgeInsets.all(10.0),
+                                    child: IconButton(
+                                      icon: Icon(Icons.image),
+                                      iconSize: 30.0,
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                if (provider.a.data[index].document != '')
+                                  Container(
+                                    margin: EdgeInsets.all(10.0),
+                                    child: IconButton(
+                                      icon: Icon(Icons.picture_as_pdf),
+                                      iconSize: 30.0,
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                Container(
+                                  margin: EdgeInsets.all(10.0),
+                                  child: IconButton(
+                                    icon: Icon(Icons.share),
+                                    iconSize: 30.0,
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -114,5 +142,16 @@ class _FeedsScreenState extends State<FeedsScreen> {
     int index = x.indexOf(' ');
     int last = x.indexOf(' ', index + 1);
     return x.substring(0, last) + "\n Ago";
+  }
+
+  stripText(i) {
+    const start = '">';
+    const end = '</a>';
+    var str = i;
+
+    final startIndex = str.indexOf(start);
+    final endIndex = str.indexOf(end);
+    final result = str.substring(startIndex + start.length, endIndex).trim();
+    return result;
   }
 }
