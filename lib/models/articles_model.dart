@@ -29,6 +29,7 @@ class Datum {
     required this.title,
     required this.published_date,
     required this.node,
+    required this.actual_date,
     this.body,
     this.image,
     this.document,
@@ -36,6 +37,7 @@ class Datum {
 
   final String node;
   final String title;
+  final String actual_date;
   final String published_date;
   final String? body;
   final String? document;
@@ -48,6 +50,7 @@ class Datum {
         body: json["body"],
         document: json["documents"],
         image: json["image"],
+        actual_date: json["actual_date"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -57,5 +60,6 @@ class Datum {
         "documents": document,
         "image": image,
         "node": node,
+        "actual_date": actual_date,
       };
 }

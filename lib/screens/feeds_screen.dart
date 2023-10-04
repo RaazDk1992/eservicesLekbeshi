@@ -3,10 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
+import 'package:lekbeshimuneservices/screens/pdf_reader.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
-import '../models/articles_model.dart';
 import '../workers/articles_provider.dart';
 
 class FeedsScreen extends StatefulWidget {
@@ -80,7 +80,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
               ListView.separated(
                   itemBuilder: (context, index) => ListTile(
                         onTap: () {
-                          String x = provider.a.data[index].body.toString();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -110,6 +109,11 @@ class _FeedsScreenState extends State<FeedsScreen> {
                               height: 50.0,
                               child: Row(
                                 children: [
+                                  Container(
+                                    child: Text(provider
+                                        .a.data[index].actual_date
+                                        .toString()),
+                                  ),
                                   if (provider.a.data[index].image != '')
                                     Container(
                                         margin: EdgeInsets.all(10.0),
@@ -117,7 +121,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                           onPressed: () => showDialog(
                                               context: context,
                                               builder: (_) => AlertDialog(
-                                                    title: Text('imgg'),
+                                                    // title: Text('imgg'),
                                                     content: showLibrary(
                                                         context,
                                                         provider
@@ -135,7 +139,18 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                     Container(
                                         margin: EdgeInsets.all(10.0),
                                         child: IconButton(
-                                          onPressed: showFile,
+                                          onPressed: () => {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PdfReader(
+                                                          url: stripUrl(provider
+                                                              .a
+                                                              .data[index]
+                                                              .document!)[0]),
+                                                ))
+                                          },
                                           icon: Icon(
                                               Icons.picture_as_pdf_outlined),
                                           iconSize: 30.0,
