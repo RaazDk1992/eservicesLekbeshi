@@ -186,6 +186,8 @@ class CarouselScreen extends StatelessWidget {
     );
   }
 
+  showImage(String pathData) {}
+
   stripUrl(String data) {
     RegExp exp =
         new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');

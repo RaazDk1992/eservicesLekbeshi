@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import '../models/articles_model.dart';
 import '../workers/articles_provider.dart';
@@ -100,7 +102,16 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                     Container(
                                         margin: EdgeInsets.all(10.0),
                                         child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: () => showDialog(
+                                              context: context,
+                                              builder: (_) => AlertDialog(
+                                                    title: Text('imgg'),
+                                                    content: showLibrary(
+                                                        context,
+                                                        provider
+                                                            .a.data[index].image
+                                                            .toString()),
+                                                  )),
                                           icon: Icon(Icons.image),
                                           iconSize: 30.0,
                                         ))
@@ -112,7 +123,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                     Container(
                                         margin: EdgeInsets.all(10.0),
                                         child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: showFile,
                                           icon: Icon(
                                               Icons.picture_as_pdf_outlined),
                                           iconSize: 30.0,
@@ -147,6 +158,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
     return x.substring(0, last) + "\n Ago";
   }
 
+  showFile() {
+    print('object');
+  }
+
   stripText(i) {
     const start = '">';
     const end = '</a>';
@@ -156,5 +171,54 @@ class _FeedsScreenState extends State<FeedsScreen> {
     final endIndex = str.indexOf(end);
     final result = str.substring(startIndex + start.length, endIndex).trim();
     return result;
+  }
+
+  stripUrl(String data) {
+    final urlRegExp = new RegExp(
+        r"((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?");
+    final urlMatches = urlRegExp.allMatches(data);
+    List urls = urlMatches
+        .map((urlMatch) => data.substring(urlMatch.start, urlMatch.end))
+        .toList();
+    return urls;
+  }
+
+  showLibrary(x, y) {
+    List imageList = stripUrl(y);
+
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: PhotoViewGallery.builder(
+        itemCount: imageList.length,
+        builder: (context, index) {
+          return PhotoViewGalleryPageOptions(
+            imageProvider: NetworkImage(
+              imageList[index],
+            ),
+            minScale: PhotoViewComputedScale.contained * 0.9,
+            maxScale: PhotoViewComputedScale.covered * 2,
+          );
+        },
+        scrollPhysics: BouncingScrollPhysics(),
+        backgroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Theme.of(context).canvasColor,
+        ),
+        enableRotation: true,
+        loadingBuilder: (context, event) => Center(
+          child: Container(
+            width: 30.0,
+            height: 30.0,
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.orange,
+              value: event == null
+                  ? 0
+                  : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
