@@ -43,7 +43,7 @@ class Datum {
         title: json["title"],
         published_date: json["published_date"],
         body: json["body"],
-        document: json["document"],
+        document: json["documents"],
         image: json["image"],
       );
 
@@ -51,7 +51,7 @@ class Datum {
         "title": title,
         "published_date": published_date,
         "body": body,
-        "document": document,
+        "documents": document,
         "image": image,
       };
 }

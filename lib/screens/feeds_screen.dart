@@ -93,38 +93,41 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         title: Text(provider.a.data[index].title),
                         subtitle: IntrinsicWidth(
                           child: Container(
-                            height: 50.0,
-                            child: Row(
-                              children: [
-                                if (provider.a.data[index].image != '')
+                              height: 50.0,
+                              child: Row(
+                                children: [
+                                  if (provider.a.data[index].image != '')
+                                    Container(
+                                        margin: EdgeInsets.all(10.0),
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.image),
+                                          iconSize: 30.0,
+                                        ))
+                                  else
+                                  //Text('no img'),
+                                  if (provider.a.data[index].document
+                                          .toString() !=
+                                      null)
+                                    Container(
+                                        margin: EdgeInsets.all(10.0),
+                                        child: IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                              Icons.picture_as_pdf_outlined),
+                                          iconSize: 30.0,
+                                        )),
+
+                                  // Text('false--doc'),
                                   Container(
-                                    margin: EdgeInsets.all(10.0),
-                                    child: IconButton(
-                                      icon: Icon(Icons.image),
-                                      iconSize: 30.0,
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                if (provider.a.data[index].document != '')
-                                  Container(
-                                    margin: EdgeInsets.all(10.0),
-                                    child: IconButton(
-                                      icon: Icon(Icons.picture_as_pdf),
-                                      iconSize: 30.0,
-                                      onPressed: () {},
-                                    ),
-                                  ),
-                                Container(
-                                  margin: EdgeInsets.all(10.0),
-                                  child: IconButton(
-                                    icon: Icon(Icons.share),
-                                    iconSize: 30.0,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                                      margin: EdgeInsets.all(10.0),
+                                      child: IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.share),
+                                        iconSize: 30.0,
+                                      )),
+                                ],
+                              )),
                         ),
                       ),
                   separatorBuilder: (context, index) {
