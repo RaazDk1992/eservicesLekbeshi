@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:lekbeshimuneservices/models/articles_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lekbeshimuneservices/models/office_model.dart';
 
 class OfficeListProvider extends ChangeNotifier {
-  static const String end_point = "https://lekbeshimun.gov.np/api-articles";
+  static const String end_point = "https://lekbeshimun.gov.np/offices";
   bool is_loading = true;
   String error = '';
   bool errorStatus = false;

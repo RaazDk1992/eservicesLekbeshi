@@ -7,6 +7,7 @@ import 'package:lekbeshimuneservices/widgets/appbar.dart';
 import 'package:lekbeshimuneservices/widgets/bottomnavigation.dart';
 import 'package:lekbeshimuneservices/widgets/navigationdrawer.dart';
 import 'package:lekbeshimuneservices/workers/articles_provider.dart';
+import 'package:lekbeshimuneservices/workers/fetch_offices.dart';
 import 'package:provider/provider.dart';
 import '../theme.dart';
 import '../workers/carousel_provider.dart';
@@ -37,7 +38,9 @@ class _DashboardState extends State<Dashboard> {
         ChangeNotifierProvider<ArticleProvider>(
             create: (_) => ArticleProvider()),
         ChangeNotifierProvider<CarouselProvider>(
-            create: (_) => CarouselProvider())
+            create: (_) => CarouselProvider()),
+        ChangeNotifierProvider<OfficeListProvider>(
+            create: (_) => OfficeListProvider())
       ],
       child: Scaffold(
         appBar: WidgetAppBar(title: 'Dashboard'),
