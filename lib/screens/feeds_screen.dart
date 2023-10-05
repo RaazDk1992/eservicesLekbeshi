@@ -120,11 +120,14 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                               context: context,
                                               builder: (_) => AlertDialog(
                                                     // title: Text('imgg'),
-                                                    content: showLibrary(
-                                                        context,
-                                                        provider
-                                                            .a.data[index].image
-                                                            .toString()),
+                                                    content: Container(
+                                                      width: double.maxFinite,
+                                                      child: showLibrary(
+                                                          context,
+                                                          provider.a.data[index]
+                                                              .image
+                                                              .toString()),
+                                                    ),
                                                   )),
                                           icon: Icon(Icons.image),
                                           iconSize: 30.0,
