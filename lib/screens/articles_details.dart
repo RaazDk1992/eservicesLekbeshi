@@ -1,7 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:lekbeshimuneservices/models/articles_model.dart';
 
 class DetailedArticle extends StatelessWidget {
   String? id;

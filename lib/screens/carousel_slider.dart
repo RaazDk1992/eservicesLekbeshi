@@ -2,14 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lekbeshimuneservices/workers/carousel_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../models/articles_model.dart';
-import '../workers/articles_provider.dart';
 
 class CarouselScreen extends StatelessWidget {
   const CarouselScreen({super.key});

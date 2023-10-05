@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:lekbeshimuneservices/models/articles_model.dart';
+
 import 'package:lekbeshimuneservices/screens/carousel_slider.dart';
 import 'package:lekbeshimuneservices/screens/feeds_screen.dart';
 import 'package:lekbeshimuneservices/widgets/appbar.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lekbeshimuneservices/screens/register_screen.dart';
-import 'package:lekbeshimuneservices/widgets/custom_checkbox.dart';
 import 'package:lekbeshimuneservices/widgets/input_field.dart';
 import 'package:lekbeshimuneservices/widgets/primary_button.dart';
 
