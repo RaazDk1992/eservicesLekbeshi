@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:lekbeshimuneservices/firebase/firebase_setup.dart';
 import 'package:lekbeshimuneservices/firebase/local_notification.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
