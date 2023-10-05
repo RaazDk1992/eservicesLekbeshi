@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
-import 'package:lekbeshimuneservices/screens/image_viwer.dart';
 import 'package:lekbeshimuneservices/screens/pdf_reader.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
 import '../workers/articles_provider.dart';
 
@@ -115,22 +116,16 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                     Container(
                                         margin: EdgeInsets.all(10.0),
                                         child: IconButton(
-                                          onPressed: () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ImageViewer(
-                                                          articleTitle:
-                                                              provider
-                                                                  .a
-                                                                  .data[index]
-                                                                  .title
-                                                                  .toString(),
-                                                          imageUrls: stripUrl(
-                                                              provider
-                                                                  .a
-                                                                  .data[index]
-                                                                  .image!)))),
+                                          onPressed: () => showDialog(
+                                              context: context,
+                                              builder: (_) => AlertDialog(
+                                                    // title: Text('imgg'),
+                                                    content: showLibrary(
+                                                        context,
+                                                        provider
+                                                            .a.data[index].image
+                                                            .toString()),
+                                                  )),
                                           icon: Icon(Icons.image),
                                           iconSize: 30.0,
                                         ))
@@ -211,5 +206,44 @@ class _FeedsScreenState extends State<FeedsScreen> {
         .map((urlMatch) => data.substring(urlMatch.start, urlMatch.end))
         .toList();
     return urls;
+  }
+
+  showLibrary(x, y) {
+    List imageList = stripUrl(y);
+
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: PhotoViewGallery.builder(
+        itemCount: imageList.length,
+        builder: (context, index) {
+          return PhotoViewGalleryPageOptions(
+            imageProvider: NetworkImage(
+              imageList[index],
+            ),
+            minScale: PhotoViewComputedScale.contained * 0.9,
+            maxScale: PhotoViewComputedScale.covered * 2,
+          );
+        },
+        scrollPhysics: BouncingScrollPhysics(),
+        backgroundDecoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+          color: Theme.of(context).canvasColor,
+        ),
+        enableRotation: true,
+        loadingBuilder: (context, event) => Center(
+          child: Container(
+            width: 30.0,
+            height: 30.0,
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.orange,
+              value: event == null
+                  ? 0
+                  : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
