@@ -6,13 +6,23 @@ import 'package:http/http.dart' as http;
 import 'package:lekbeshimuneservices/models/office_model.dart';
 
 class OfficeListProvider extends ChangeNotifier {
-  static const String end_point = "https://lekbeshimun.gov.np/offices";
+  static const String end_point = "https://lekbeshimun.gov.np/offices-api";
   bool is_loading = true;
   String error = '';
   bool errorStatus = false;
-  List<Office> officeList = [];
-
+  Office office = Office(data: []);
   String searchString = '';
+  setError(bool status) {
+    this.errorStatus = status;
+  }
+
+  bool _hasError() {
+    return errorStatus;
+  }
+
+  String getErrorMessage() {
+    return error;
+  }
 
   getDataFromAPI() async {
     try {
@@ -23,13 +33,15 @@ class OfficeListProvider extends ChangeNotifier {
       if (r.statusCode == 200) {
         Map<String, dynamic> map1 = {'data': jsonDecode(r.body)};
 
-        officeList = officeFromJson(jsonEncode(map1));
+        office = officeFromJson(jsonEncode(map1));
         //return ab;
       } else {
+        setError(true);
         error = r.statusCode.toString();
       }
-    } catch (e) {
-      // print("error: " + e.toString() + "," + stacktrace.toString());
+    } catch (e, stacktrace) {
+      setError(true);
+      print("error: " + e.toString() + "," + stacktrace.toString());
       error = e.toString();
     }
     is_loading = false;

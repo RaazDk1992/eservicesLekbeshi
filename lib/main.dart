@@ -9,6 +9,8 @@ import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:lekbeshimuneservices/screens/dashboard.dart';
 import 'package:lekbeshimuneservices/screens/home.dart';
 import 'package:lekbeshimuneservices/screens/login_screen.dart';
+import 'package:lekbeshimuneservices/workers/fetch_offices.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -49,15 +51,19 @@ class _MainWindowState extends State<MainWindow> {
   @override
   Widget build(BuildContext context) {
     // For Forground State
-
-    return MaterialApp(
-      initialRoute: "/dashboard",
-      routes: {
-        "/dashboard": (context) => Dashboard(),
-        "/detailed-article": (context) => DetailedArticle(),
-      },
-      debugShowCheckedModeBanner: false,
-      home: Dashboard(),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<OfficeListProvider>(
+              create: (_) => OfficeListProvider())
+        ],
+        child: MaterialApp(
+          initialRoute: "/dashboard",
+          routes: {
+            "/dashboard": (context) => Dashboard(),
+            "/detailed-article": (context) => DetailedArticle(),
+          },
+          debugShowCheckedModeBanner: false,
+          home: Dashboard(),
+        ));
   }
 }

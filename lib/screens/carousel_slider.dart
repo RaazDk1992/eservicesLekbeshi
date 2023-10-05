@@ -3,25 +3,37 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lekbeshimuneservices/screens/office_list.dart';
 import 'package:lekbeshimuneservices/workers/carousel_provider.dart';
+import 'package:lekbeshimuneservices/workers/fetch_offices.dart';
 import 'package:provider/provider.dart';
 
-class CarouselScreen extends StatelessWidget {
+class CarouselScreen extends StatefulWidget {
   const CarouselScreen({super.key});
 
   @override
+  State<CarouselScreen> createState() => _CarouselScreenState();
+}
+
+class _CarouselScreenState extends State<CarouselScreen> {
+  @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CarouselProvider>(context);
-    return Container(
-      child: provider.is_loading
-          ? getLoadingUI()
-          : provider.error.isNotEmpty
-              ? getErrorUI(provider.error)
-              : Container(
-                  margin: const EdgeInsets.only(top: 10.0),
-                  child: getBodyUI(context),
-                ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CarouselProvider>(
+              create: (_) => CarouselProvider()),
+        ],
+        child: Container(
+          child: provider.is_loading
+              ? getLoadingUI()
+              : provider.error.isNotEmpty
+                  ? getErrorUI(provider.error)
+                  : Container(
+                      margin: const EdgeInsets.only(top: 10.0),
+                      child: getBodyUI(context),
+                    ),
+        ));
   }
 
   getLoadingUI() {
@@ -121,26 +133,35 @@ class CarouselScreen extends StatelessWidget {
                 crossAxisCount: 3,
                 children: <Widget>[
                   Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.book,
-                            color: Colors.white,
-                            size: 40.0,
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text('data')
-                        ],
+                    child: InkWell(
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OfficeLists(),
+                            ))
+                      },
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5.0))),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.book,
+                              color: Colors.white,
+                              size: 40.0,
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Text('data')
+                          ],
+                        ),
                       ),
                     ),
                   ),

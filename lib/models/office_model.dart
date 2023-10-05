@@ -1,19 +1,45 @@
+// To parse this JSON data, do
+//
+//     final pets = petsFromJson(jsonString);
+
 import 'dart:convert';
 
-class Office {
-  final String? name;
-  final String? id;
+Office officeFromJson(String str) => Office.fromJson(json.decode(str));
 
-  const Office({
+String officeToJson(Office data) => json.encode(data.toJson());
+
+class Office {
+  Office({
+    required this.data,
+  });
+
+  final List<Datum> data;
+
+  factory Office.fromJson(Map<String, dynamic> json) => Office(
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
+}
+
+class Datum {
+  Datum({
     required this.name,
     required this.id,
   });
 
-  factory Office.fromJson(Map<String, dynamic> json) => Office(
-        name: json['name'],
-        id: json['id'],
-      );
-}
+  final String name;
+  final String id;
 
-List<Office> officeFromJson(String str) =>
-    List<Office>.from(json.decode(str).map((x) => Office.fromJson(x)));
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        id: json["id"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+      };
+}
