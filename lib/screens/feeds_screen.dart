@@ -42,7 +42,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
   getLoadingUI() {
     print("-------------loading ui-----------------------");
     return Center(
-      child: SpinKitRotatingCircle(
+      child: SpinKitDoubleBounce(
         color: Colors.green,
         size: 50.0,
       ),

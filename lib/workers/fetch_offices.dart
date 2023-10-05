@@ -4,21 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:lekbeshimuneservices/models/articles_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:lekbeshimuneservices/models/carousel_model.dart';
+import 'package:lekbeshimuneservices/models/office_model.dart';
 
-class CarouselProvider with ChangeNotifier {
-  static const String end_point = "https://lekbeshimun.gov.np/slider-api";
+class OfficeListProvider extends ChangeNotifier {
+  static const String end_point = "https://lekbeshimun.gov.np/api-articles";
   bool is_loading = true;
   String error = '';
   bool errorStatus = false;
-  Carousels a = Carousels(data: []);
-  CarouselProvider() {
-    getDataFromAPI();
-  }
+  List<Office> officeList = [];
 
-  String getErrorMessage() {
-    return error;
-  }
+  String searchString = '';
 
   getDataFromAPI() async {
     try {
@@ -29,7 +24,7 @@ class CarouselProvider with ChangeNotifier {
       if (r.statusCode == 200) {
         Map<String, dynamic> map1 = {'data': jsonDecode(r.body)};
 
-        a = slidesFromJson(jsonEncode(map1));
+        officeList = officeFromJson(jsonEncode(map1));
         //return ab;
       } else {
         error = r.statusCode.toString();
