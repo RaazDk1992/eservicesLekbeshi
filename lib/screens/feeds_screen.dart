@@ -116,21 +116,17 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                     Container(
                                         margin: EdgeInsets.all(10.0),
                                         child: IconButton(
-                                          onPressed: () => showDialog(
-                                              context: context,
-                                              builder: (_) => AlertDialog(
-                                                    // title: Text('imgg'),
-                                                    content: Container(
-                                                      width: double.maxFinite,
-                                                      child: showLibrary(
-                                                          context,
-                                                          provider.a.data[index]
-                                                              .image
-                                                              .toString()),
-                                                    ),
-                                                  )),
+                                          onPressed: () {
+                                            showDialog(
+                                                context: context,
+                                                builder: ((context) =>
+                                                    loadImage(
+                                                        context,
+                                                        provider
+                                                            .a.data[index].image
+                                                            .toString())));
+                                          },
                                           icon: Icon(Icons.image),
-                                          iconSize: 30.0,
                                         ))
                                   else
                                   //Text('no img'),
@@ -161,9 +157,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                   Container(
                                       margin: EdgeInsets.all(10.0),
                                       child: IconButton(
-                                        onPressed: () {},
                                         icon: Icon(Icons.share),
                                         iconSize: 30.0,
+                                        onPressed: () {},
                                       )),
                                 ],
                               )),
@@ -184,10 +180,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
     int index = x.indexOf(' ');
     int last = x.indexOf(' ', index + 1);
     return x.substring(0, last) + "\n Ago";
-  }
-
-  showFile() {
-    print('object');
   }
 
   stripText(i) {
@@ -211,38 +203,43 @@ class _FeedsScreenState extends State<FeedsScreen> {
     return urls;
   }
 
-  showLibrary(x, y) {
+  loadImage(x, y) {
     List imageList = stripUrl(y);
 
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: PhotoViewGallery.builder(
-        itemCount: imageList.length,
-        builder: (context, index) {
-          return PhotoViewGalleryPageOptions(
-            imageProvider: NetworkImage(
-              imageList[index],
-            ),
-            minScale: PhotoViewComputedScale.contained * 0.9,
-            maxScale: PhotoViewComputedScale.covered * 2,
-          );
-        },
-        scrollPhysics: BouncingScrollPhysics(),
-        backgroundDecoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: Theme.of(context).canvasColor,
-        ),
-        enableRotation: true,
-        loadingBuilder: (context, event) => Center(
-          child: Container(
-            width: 30.0,
-            height: 30.0,
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.orange,
-              value: event == null
-                  ? 0
-                  : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+    return Dialog(
+      elevation: 0,
+      insetPadding: EdgeInsets.only(left: 5.0, right: 5.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 150,
+        width: MediaQuery.of(context).size.width - 20,
+        child: PhotoViewGallery.builder(
+          itemCount: imageList.length,
+          builder: (context, index) {
+            return PhotoViewGalleryPageOptions(
+              imageProvider: NetworkImage(
+                imageList[index],
+              ),
+              minScale: PhotoViewComputedScale.contained * 1,
+              maxScale: PhotoViewComputedScale.covered * 2,
+            );
+          },
+          scrollPhysics: BouncingScrollPhysics(),
+          backgroundDecoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Theme.of(context).canvasColor,
+          ),
+          enableRotation: true,
+          loadingBuilder: (context, event) => Center(
+            child: Container(
+              width: 30.0,
+              height: 30.0,
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.orange,
+                value: event == null
+                    ? 0
+                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+              ),
             ),
           ),
         ),

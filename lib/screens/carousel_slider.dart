@@ -152,14 +152,20 @@ class _CarouselScreenState extends State<CarouselScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.book,
+                              Icons.work,
                               color: Colors.white,
-                              size: 40.0,
+                              size: 30.0,
                             ),
                             SizedBox(
                               height: 5.0,
                             ),
-                            Text('data')
+                            Text(
+                              'Offices',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15.0),
+                            )
                           ],
                         ),
                       ),

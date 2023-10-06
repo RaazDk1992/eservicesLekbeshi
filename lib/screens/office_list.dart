@@ -72,10 +72,30 @@ class _OfficeListsState extends State<OfficeLists> {
               itemBuilder: (BuildContext ctx, index) {
                 return Container(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors.amber,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Text(provider.office.data[index].name.toString()),
+                  child: InkWell(
+                    onTap: () => {print("tap")},
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.work,
+                          size: 20.0,
+                          color: Colors.blueGrey,
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          provider.office.data[index].name.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey,
+                              fontSize: 15.0),
+                        )
+                      ],
+                    ),
+                  ),
                 );
               }),
         ),
