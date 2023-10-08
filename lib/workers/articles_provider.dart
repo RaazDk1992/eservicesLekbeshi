@@ -52,16 +52,41 @@ class ArticleProvider extends ChangeNotifier {
 
   updateData() {
     sa.data.clear();
+
+    matches(normalize(searchString), normalize(a.data[0].title));
     if (searchString.isEmpty) {
       sa.data.addAll(a.data);
-    } else {
-      sa.data.addAll(a.data
-          .where((element) =>
-              element.published_date.toLowerCase().contains(searchString))
-          .toList());
-    }
+    } else {}
     notifyListeners();
   }
+
+  bool matches(String x, String y) {
+    bool match = false;
+    String tx = normalize(x);
+    String ty = normalize(y);
+    if (ty.contains(tx)) {
+      match = true;
+    } else {
+      match = false;
+    }
+    print(ty.contains(tx));
+    return match;
+  }
+
+  String normalize(String input) => input
+      .replaceAll('\u0901', '')
+      .replaceAll('\u0902', '')
+      .replaceAll('\u0903', '')
+      .replaceAll('\u0940', '')
+      .replaceAll('\u0941', '')
+      .replaceAll('\u0943', '')
+      .replaceAll('\u0945', '')
+      .replaceAll('\u0946', '')
+      .replaceAll('\u0947', '')
+      .replaceAll('\u093E', '')
+      .replaceAll('\u093F', '')
+      .replaceAll('\u0956', '')
+      .replaceAll('\u0971', '');
 
   makeSearch(String search_text) {
     searchString = search_text;
