@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lekbeshimuneservices/screens/staffs_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   @override
@@ -33,7 +34,12 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(FontAwesomeIcons.users),
               title: Text('Staffs'),
-              onTap: () => {},
+              onTap: () => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const StaffsScreen())),
+              },
             ),
             ListTile(
               leading: const Icon(Icons.file_copy_outlined),

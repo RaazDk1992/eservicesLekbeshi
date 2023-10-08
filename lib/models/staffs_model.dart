@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
+part 'staffs_model.g.dart';
+
 Staffs staffsFromJson(String str) => Staffs.fromJson(json.decode(str));
 
 String articleToJson(Staffs data) => json.encode(data.toJson());
@@ -24,13 +27,21 @@ class Staffs {
       };
 }
 
+@HiveType(typeId: 10)
 class Staff {
+  @HiveField(0)
   final String title;
+  @HiveField(1)
   final String image;
+  @HiveField(2)
   final String designation;
+  @HiveField(3)
   final String? phone;
+  @HiveField(4)
   final String? email;
+  @HiveField(5)
   final String office;
+  @HiveField(6)
   final String? dept;
 
   const Staff(

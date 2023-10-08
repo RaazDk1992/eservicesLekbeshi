@@ -3,13 +3,17 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:lekbeshimuneservices/firebase/firebase_setup.dart';
 import 'package:lekbeshimuneservices/firebase/local_notification.dart';
+import 'package:lekbeshimuneservices/models/staffs_model.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:lekbeshimuneservices/screens/dashboard.dart';
 import 'package:lekbeshimuneservices/screens/home.dart';
 import 'package:lekbeshimuneservices/screens/login_screen.dart';
 import 'package:lekbeshimuneservices/workers/fetch_offices.dart';
+import 'package:lekbeshimuneservices/workers/staffs_provider.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,6 +23,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (defaultTargetPlatform == TargetPlatform.android) {
     try {
+      await Hive.initFlutter();
+      Hive.registerAdapter(StaffAdapter());
+
       await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform);
       await FirebaseSetup().initFirebaseNotifications();
@@ -54,7 +61,9 @@ class _MainWindowState extends State<MainWindow> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<OfficeListProvider>(
-              create: (_) => OfficeListProvider())
+              create: (_) => OfficeListProvider()),
+          ChangeNotifierProvider<StaffsProvider>(
+              create: (_) => StaffsProvider())
         ],
         child: MaterialApp(
           initialRoute: "/dashboard",
