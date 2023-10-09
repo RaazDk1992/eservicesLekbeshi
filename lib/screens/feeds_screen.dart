@@ -129,46 +129,11 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                         .a.data[index].actual_date
                                         .toString()),
                                   ),
-                                  if (provider.a.data[index].image != '')
-                                    Container(
-                                        margin: EdgeInsets.all(10.0),
-                                        child: IconButton(
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder: ((context) =>
-                                                    loadImage(
-                                                        context,
-                                                        provider
-                                                            .a.data[index].image
-                                                            .toString())));
-                                          },
-                                          icon: Icon(Icons.image),
-                                        ))
-                                  else
-                                  //Text('no img'),
-                                  if (provider.a.data[index].document
-                                          .toString() !=
-                                      null)
-                                    Container(
-                                        margin: EdgeInsets.all(10.0),
-                                        child: IconButton(
-                                          onPressed: () => {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PdfReader(
-                                                          url: stripUrl(provider
-                                                              .a
-                                                              .data[index]
-                                                              .document!)[0]),
-                                                ))
-                                          },
-                                          icon: Icon(
-                                              Icons.picture_as_pdf_outlined),
-                                          iconSize: 30.0,
-                                        )),
+
+                                  loadWidget(
+                                      provider.a.data[index].document
+                                          .toString(),
+                                      provider.a.data[index].image.toString()),
 
                                   // Text('false--doc'),
                                   Container(
@@ -197,6 +162,116 @@ class _FeedsScreenState extends State<FeedsScreen> {
     int index = x.indexOf(' ');
     int last = x.indexOf(' ', index + 1);
     return x.substring(0, last) + "\n Ago";
+  }
+
+  loadWidget(
+    String documentPath,
+    String imagePath,
+  ) {
+    bool HasImage = imagePath?.isNotEmpty ?? false;
+    bool HasDocument = documentPath?.isNotEmpty ?? false;
+
+    if (HasImage && HasDocument) {
+      return IntrinsicWidth(
+        child: Container(
+            height: 50.0,
+            child: Row(
+              children: [
+                Container(
+                  child: Text('-'),
+                ),
+
+                Container(
+                    margin: EdgeInsets.all(5.0),
+                    child: IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: ((context) =>
+                                loadImage(context, imagePath)));
+                      },
+                      icon: Icon(Icons.image),
+                    )),
+
+                //Text('no img'),
+
+                Container(
+                    margin: EdgeInsets.all(5.0),
+                    child: IconButton(
+                      onPressed: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PdfReader(url: stripUrl(documentPath)[0]),
+                            ))
+                      },
+                      icon: Icon(Icons.picture_as_pdf_outlined),
+                      iconSize: 30.0,
+                    )),
+
+                // Text('false--doc'),
+              ],
+            )),
+      );
+    } else if (HasDocument) {
+      return IntrinsicWidth(
+        child: Container(
+            height: 50.0,
+            child: Row(
+              children: [
+                Container(
+                  child: Text('-'),
+                ),
+
+                //Text('no img'),
+
+                Container(
+                    margin: EdgeInsets.all(5.0),
+                    child: IconButton(
+                      onPressed: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PdfReader(url: stripUrl(documentPath)[0]),
+                            ))
+                      },
+                      icon: Icon(Icons.picture_as_pdf_outlined),
+                      iconSize: 30.0,
+                    )),
+
+                // Text('false--doc'),
+              ],
+            )),
+      );
+    } else {
+      return IntrinsicWidth(
+        child: Container(
+            height: 50.0,
+            child: Row(
+              children: [
+                Container(
+                  child: Text('-'),
+                ),
+
+                Container(
+                    margin: EdgeInsets.all(5.0),
+                    child: IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: ((context) =>
+                                loadImage(context, imagePath)));
+                      },
+                      icon: Icon(Icons.image),
+                    )),
+
+                //Text('no img'),
+              ],
+            )),
+      );
+    }
   }
 
   stripText(i) {
