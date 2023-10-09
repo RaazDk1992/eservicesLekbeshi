@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
-import 'package:lekbeshimuneservices/models/articles_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:lekbeshimuneservices/models/staffs_model.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,11 +12,13 @@ class StaffsProvider extends ChangeNotifier {
   bool is_loading = true;
   String error = '';
   bool errorStatus = false;
+  final String Stfs = 'Staffx';
 
   Staffs staffs = Staffs(data: []);
-
+  Staffs searchedStaffs = Staffs(data: []);
+  Box<Staff> bx = Hive.box('staffs');
   String searchString = '';
-  late Box _box;
+
   setError(bool status) {
     this.errorStatus = status;
   }
@@ -33,7 +34,7 @@ class StaffsProvider extends ChangeNotifier {
 
         staffs = staffsFromJson(jsonEncode(map1));
 
-        storeToLocal(staffs);
+        storeToLocal();
         //return ab;
       } else {
         setError(true);
@@ -48,14 +49,21 @@ class StaffsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void storeToLocal(Staffs staffs) async {
-    const String Stfs = 'Staffx';
-    var dir = await getApplicationDocumentsDirectory();
-    Hive.init(dir.path);
-    _box = await Hive.openBox(Stfs);
-    _box.clear();
-    print("+++++++++++Now adding++++++++++++++");
-    _box.putAll(staffs.data as Map);
-    _box.close();
+  void storeToLocal() async {
+    await bx.clear();
+
+    staffs.data.forEach((element) {
+      bx.add(element);
+    });
+  }
+
+  updateData() async {
+    print("Total Data:" + bx.values.length.toString());
+    notifyListeners();
+  }
+
+  makeSearch(String query) {
+    searchString = query;
+    updateData();
   }
 }

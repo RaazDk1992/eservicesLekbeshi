@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hive/hive.dart';
+import 'package:lekbeshimuneservices/models/staffs_model.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:lekbeshimuneservices/screens/pdf_reader.dart';
 import 'package:lekbeshimuneservices/workers/staffs_provider.dart';
@@ -23,6 +25,14 @@ class _StaffsScreenState extends State<StaffsScreen> {
     final provider = Provider.of<StaffsProvider>(context, listen: false);
 
     provider.getDataFromAPI();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    super.dispose();
+    Hive.box('staffx').close();
   }
 
   @override
@@ -72,7 +82,7 @@ class _StaffsScreenState extends State<StaffsScreen> {
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
                 suffixIcon: Icon(Icons.search)),
-            // onChanged: (value) => provider.makeSearch(value),
+            onChanged: (value) => provider.makeSearch(value),
           ),
         ),
         Expanded(

@@ -14,6 +14,7 @@ import 'package:lekbeshimuneservices/screens/home.dart';
 import 'package:lekbeshimuneservices/screens/login_screen.dart';
 import 'package:lekbeshimuneservices/workers/fetch_offices.dart';
 import 'package:lekbeshimuneservices/workers/staffs_provider.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +25,10 @@ void main() async {
   if (defaultTargetPlatform == TargetPlatform.android) {
     try {
       await Hive.initFlutter();
+      var dir = await getApplicationDocumentsDirectory();
+      Hive.init(dir.path);
       Hive.registerAdapter(StaffAdapter());
+      await Hive.openBox<Staff>('staffs');
 
       await Firebase.initializeApp(
           options: DefaultFirebaseOptions.currentPlatform);
