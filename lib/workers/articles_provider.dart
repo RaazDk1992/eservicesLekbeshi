@@ -14,82 +14,37 @@ class ArticleProvider extends ChangeNotifier {
   Articles a = Articles(data: []);
   Articles sa = Articles(data: []);
   String searchString = '';
-  setError(bool status) {
-    this.errorStatus = status;
-  }
 
-  bool _hasError() {
-    return errorStatus;
-  }
-
-  String getErrorMessage() {
-    return error;
-  }
-
-  getDataFromAPI() async {
+  getDataFromAPI(String url) async {
     try {
       var client = http.Client();
-      var ri = Uri.parse(end_point);
+      var ri = Uri.parse(url!.isEmpty ? end_point : url);
+      print(ri.toString());
       Response r = await client.get(ri);
 
       if (r.statusCode == 200) {
         Map<String, dynamic> map1 = {'data': jsonDecode(r.body)};
-
+        a.data.clear();
         a = articleFromJson(jsonEncode(map1));
         //return ab;
       } else {
-        setError(true);
         error = r.statusCode.toString();
       }
     } catch (e) {
-      setError(true);
       // print("error: " + e.toString() + "," + stacktrace.toString());
       error = e.toString();
     }
     is_loading = false;
-    updateData();
-  }
-
-  updateData() {
-    sa.data.clear();
-
-    matches(normalize(searchString), normalize(a.data[0].title));
-    if (searchString.isEmpty) {
-      sa.data.addAll(a.data);
-    } else {}
     notifyListeners();
   }
 
-  bool matches(String x, String y) {
-    bool match = false;
-    String tx = normalize(x);
-    String ty = normalize(y);
-    if (ty.contains(tx)) {
-      match = true;
-    } else {
-      match = false;
-    }
-    print(ty.contains(tx));
-    return match;
-  }
-
-  String normalize(String input) => input
-      .replaceAll('\u0901', '')
-      .replaceAll('\u0902', '')
-      .replaceAll('\u0903', '')
-      .replaceAll('\u0940', '')
-      .replaceAll('\u0941', '')
-      .replaceAll('\u0943', '')
-      .replaceAll('\u0945', '')
-      .replaceAll('\u0946', '')
-      .replaceAll('\u0947', '')
-      .replaceAll('\u093E', '')
-      .replaceAll('\u093F', '')
-      .replaceAll('\u0956', '')
-      .replaceAll('\u0971', '');
-
   makeSearch(String search_text) {
-    searchString = search_text;
-    updateData();
+    searchString = search_text.trim();
+    String st = searchString.replaceAll(' ', '+');
+    String _end_point =
+        "https://lekbeshimun.gov.np/search-all" + "?title=" + st;
+    getDataFromAPI(_end_point);
+
+    //updateData();
   }
 }

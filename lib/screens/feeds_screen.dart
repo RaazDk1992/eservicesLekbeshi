@@ -15,13 +15,14 @@ class FeedsScreen extends StatefulWidget {
 }
 
 class _FeedsScreenState extends State<FeedsScreen> {
+  final SearchTextController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     final provider = Provider.of<ArticleProvider>(context, listen: false);
 
-    provider.getDataFromAPI();
+    provider.getDataFromAPI('');
   }
 
   @override
@@ -61,17 +62,33 @@ class _FeedsScreenState extends State<FeedsScreen> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.all(3.0),
-          padding: EdgeInsets.all(2.0),
-          child: TextField(
-            decoration: InputDecoration(
-                hintText: 'Search',
+            margin: EdgeInsets.all(3.0),
+            padding: EdgeInsets.all(2.0),
+            child: TextFormField(
+              controller: SearchTextController,
+              decoration: InputDecoration(
+                suffixIcon: InkWell(
+                  onTap: () => {provider.makeSearch(SearchTextController.text)},
+                  child: Container(
+                    height: 25,
+                    color: Colors.blue,
+                    child: AspectRatio(
+                      aspectRatio: 1.5 / 1,
+                      child: Center(
+                          child: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                      )),
+                    ),
+                  ),
+                ),
+                hintText: 'Search Document',
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                suffixIcon: Icon(Icons.search)),
-            onChanged: (value) => provider.makeSearch(value),
-          ),
-        ),
+                  borderSide: BorderSide(width: 1, color: Colors.black),
+                ),
+              ),
+            )),
         Expanded(
             child: Consumer(
           builder: (context, ArticleProvider articleProvider, child) =>
@@ -93,7 +110,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           child: Center(
                             child: Text(
                               getSubstring(articleProvider
-                                  .sa.data[index].published_date
+                                  .a.data[index].published_date
                                   .toString()),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -170,7 +187,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                       color: Colors.amber,
                     );
                   },
-                  itemCount: articleProvider.sa.data.length),
+                  itemCount: articleProvider.a.data.length),
         )),
       ],
     );

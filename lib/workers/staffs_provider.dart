@@ -58,7 +58,10 @@ class StaffsProvider extends ChangeNotifier {
   }
 
   updateData() async {
-    print("Total Data:" + bx.values.length.toString());
+    List<Staff> l = bx.values
+        .where((element) => element.title.contains(searchString))
+        .toList();
+    print('Total matches :' + l.length.toString());
     notifyListeners();
   }
 
