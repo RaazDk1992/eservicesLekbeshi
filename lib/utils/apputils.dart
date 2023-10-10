@@ -28,3 +28,12 @@ loadAvatar(String url) {
     return 'https://lekbeshimun.gov.np/sites/lekbeshimun.gov.np/files/default.png';
   }
 }
+
+contentLink(String link) {
+  String urlPrefix = '<a href="';
+
+  int urlStart = link.indexOf(urlPrefix) + urlPrefix.length;
+  int urlEnd = link.indexOf('"', urlStart);
+
+  return (link.substring(urlStart, urlEnd));
+}

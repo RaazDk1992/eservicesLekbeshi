@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lekbeshimuneservices/models/articles_model.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:lekbeshimuneservices/screens/pdf_reader.dart';
 import 'package:lekbeshimuneservices/utils/apputils.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import '../workers/articles_provider.dart';
 
 class FeedsScreen extends StatefulWidget {
@@ -119,7 +121,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                             ),
                           ),
                         ),
-                        title: Text(provider.a.data[index].title),
+                        title: Text(stripText(provider.a.data[index].title)),
                         subtitle: IntrinsicWidth(
                           child: Container(
                               height: 50.0,
@@ -142,7 +144,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                       child: IconButton(
                                         icon: Icon(Icons.share),
                                         iconSize: 30.0,
-                                        onPressed: () {},
+                                        onPressed: () => shareThis(
+                                            provider.a.data[index].title),
                                       )),
                                 ],
                               )),
@@ -317,5 +320,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
         ),
       ),
     );
+  }
+
+  shareThis(String data) {
+    print(contentLink(data));
+    //Share.share(stripUrl(data), subject: stripText(data));
   }
 }

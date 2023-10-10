@@ -11,6 +11,7 @@ import 'package:lekbeshimuneservices/workers/staffs_provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../workers/articles_provider.dart';
 
 class StaffsScreen extends StatefulWidget {
@@ -108,8 +109,17 @@ class _StaffsScreenState extends State<StaffsScreen> {
                             ),
                           ),
                         ),
-                        title: Text(provider.staffs.data[index].title),
-                        subtitle: IntrinsicWidth(),
+                        title: Text(provider.staffs.data[index].title +
+                            "\n" +
+                            provider.staffs.data[index].designation +
+                            "," +
+                            "\n" +
+                            provider.staffs.data[index].dept! +
+                            "\n" +
+                            provider.staffs.data[index].office),
+                        subtitle: subtitle(provider.staffs.data[index].phone,
+                            provider.staffs.data[index].email),
+                        isThreeLine: true,
                       ),
                   separatorBuilder: (context, index) {
                     return Divider(
@@ -131,5 +141,60 @@ class _StaffsScreenState extends State<StaffsScreen> {
     final endIndex = str.indexOf(end);
     final result = str.substring(startIndex + start.length, endIndex).trim();
     return result;
+  }
+
+  subtitle(String? phone, String? email) {
+    bool hasPhone = phone?.isNotEmpty ?? false;
+    bool hasMail = email?.isNotEmpty ?? false;
+
+    if (hasMail && hasPhone) {
+      return Row(
+        children: [
+          Container(
+              margin: EdgeInsets.all(3.0),
+              height: 80,
+              width: 100,
+              child: IconButton(
+                  onPressed: () => openDialer(phone!),
+                  icon: Icon(Icons.phone))),
+          Container(
+              margin: EdgeInsets.all(3.0),
+              height: 80,
+              width: 100,
+              child: IconButton(onPressed: () {}, icon: Icon(Icons.mail)))
+        ],
+      );
+    } else if (hasMail) {
+      return Row(
+        children: [
+          Container(
+              margin: EdgeInsets.all(3.0),
+              width: 100,
+              height: 80,
+              child: IconButton(onPressed: () {}, icon: Icon(Icons.mail)))
+        ],
+      );
+    } else if (hasPhone) {
+      return Row(
+        children: [
+          Container(
+              margin: EdgeInsets.all(3.0),
+              width: 100,
+              height: 80,
+              child: IconButton(onPressed: () {}, icon: Icon(Icons.phone))),
+        ],
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  openDialer(String phone) async {
+    Uri ph = Uri.parse("tel:+977" + phone);
+    if (await canLaunchUrl(ph)) {
+      await launchUrl(ph);
+    } else {
+      print('Could not launch');
+    }
   }
 }
