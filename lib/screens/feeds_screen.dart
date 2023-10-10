@@ -323,7 +323,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
   }
 
   shareThis(String data) {
-    print(contentLink(data));
-    //Share.share(stripUrl(data), subject: stripText(data));
+    final content = contentLink(data);
+    Share.share('file\n$content', subject: stripText(data));
   }
 }

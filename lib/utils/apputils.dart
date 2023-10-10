@@ -35,5 +35,5 @@ contentLink(String link) {
   int urlStart = link.indexOf(urlPrefix) + urlPrefix.length;
   int urlEnd = link.indexOf('"', urlStart);
 
-  return (link.substring(urlStart, urlEnd));
+  return ("https://lekbeshimun.gov.np" + link.substring(urlStart, urlEnd));
 }
