@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:lekbeshimuneservices/screens/pdf_reader.dart';
+import 'package:lekbeshimuneservices/utils/apputils.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:provider/provider.dart';
@@ -272,27 +273,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
             )),
       );
     }
-  }
-
-  stripText(i) {
-    const start = '">';
-    const end = '</a>';
-    var str = i;
-
-    final startIndex = str.indexOf(start);
-    final endIndex = str.indexOf(end);
-    final result = str.substring(startIndex + start.length, endIndex).trim();
-    return result;
-  }
-
-  stripUrl(String data) {
-    final urlRegExp = new RegExp(
-        r"((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?");
-    final urlMatches = urlRegExp.allMatches(data);
-    List urls = urlMatches
-        .map((urlMatch) => data.substring(urlMatch.start, urlMatch.end))
-        .toList();
-    return urls;
   }
 
   loadImage(x, y) {

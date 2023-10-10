@@ -1,9 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hive/hive.dart';
 import 'package:lekbeshimuneservices/models/staffs_model.dart';
 import 'package:lekbeshimuneservices/screens/articles_details.dart';
 import 'package:lekbeshimuneservices/screens/pdf_reader.dart';
+import 'package:lekbeshimuneservices/utils/apputils.dart';
+import 'package:lekbeshimuneservices/widgets/appbar.dart';
 import 'package:lekbeshimuneservices/workers/staffs_provider.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -39,6 +42,7 @@ class _StaffsScreenState extends State<StaffsScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<StaffsProvider>(context);
     return Scaffold(
+      appBar: WidgetAppBar(title: 'Staff details'),
       body: Container(
         child: provider.is_loading
             ? getLoadingUI()
@@ -91,8 +95,18 @@ class _StaffsScreenState extends State<StaffsScreen> {
               ListView.separated(
                   itemBuilder: (context, index) => ListTile(
                         onTap: () {},
-                        leading: Container(
-                          width: 50.0,
+                        leading: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.deepOrangeAccent,
+                          child: ClipOval(
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  loadAvatar(provider.staffs.data[index].image),
+                              fit: BoxFit.cover,
+                              width: 55,
+                              height: 110,
+                            ),
+                          ),
                         ),
                         title: Text(provider.staffs.data[index].title),
                         subtitle: IntrinsicWidth(),
