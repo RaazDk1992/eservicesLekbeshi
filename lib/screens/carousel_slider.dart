@@ -16,6 +16,8 @@ class CarouselScreen extends StatefulWidget {
 }
 
 class _CarouselScreenState extends State<CarouselScreen> {
+  int _current = 0;
+  final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<CarouselProvider>(context);
@@ -55,156 +57,158 @@ class _CarouselScreenState extends State<CarouselScreen> {
   getBodyUI(BuildContext context) {
     final provider = Provider.of<CarouselProvider>(context, listen: false);
 
-    return Expanded(
-      child: Column(
-        children: [
-          Consumer(
-              builder: (context, CarouselProvider carouselProvider, child) =>
-                  CarouselSlider.builder(
-                      itemCount: provider.a.data.length,
-                      itemBuilder: ((context, index, realIndex) => Card(
-                            elevation: 10,
-                            child: Container(
-                              padding: EdgeInsets.all(2.0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  CachedNetworkImage(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    imageUrl: stripUrl(
-                                        provider.a.data[index].slider_image),
-                                    fit: BoxFit.contain,
+    return Column(
+      children: [
+        Consumer(
+            builder: (context, CarouselProvider carouselProvider, child) =>
+                CarouselSlider.builder(
+                    itemCount: provider.a.data.length,
+                    carouselController: _controller,
+                    itemBuilder: ((context, index, realIndex) => Stack(
+                          children: [
+                            CachedNetworkImage(
+                                imageUrl: provider.a.data[index].slider_image),
+                            Positioned(
+                              top: 200,
+                              left: 0.0,
+                              right: 0.0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(1, 6, 57, 112),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 20.0),
+                                child: Text(
+                                  provider.a.data[index].Title,
+                                  style: TextStyle(
+                                    // color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    padding: EdgeInsets.all(2.0),
-                                    child: Text(
-                                      provider.a.data[index].Title,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.0),
-                                    ),
-                                  ),
-                                  ButtonBarTheme(
-                                    // make buttons use the appropriate styles for cards
-                                    data: ButtonBarThemeData(),
-                                    child: ButtonBar(
-                                      children: <Widget>[
-                                        TextButton(
-                                          child: const Text('Show More'),
-                                          onPressed: () {},
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
-                          )),
-                      options: CarouselOptions(
-                        height: 400,
-                        aspectRatio: 16 / 9,
-                        viewportFraction: 0.8,
-                        initialPage: 0,
-                        enableInfiniteScroll: true,
-                        reverse: false,
-                        autoPlay: true,
-                        autoPlayInterval: Duration(seconds: 3),
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        enlargeFactor: 0.3,
-                        //onPageChanged: callbackFunction,
-                        scrollDirection: Axis.horizontal,
-                      ))),
-          const SizedBox(
-            height: 10.0,
-          ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.all(5.0),
-              child: GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(0.0),
-                crossAxisSpacing: 5.0,
-                crossAxisCount: 3,
-                children: <Widget>[
-                  Center(
-                    child: InkWell(
-                      onTap: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OfficeLists(),
-                            ))
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 100,
-                        decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5.0))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.work,
-                              color: Colors.white,
-                              size: 30.0,
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            Text(
-                              'Offices',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15.0),
-                            )
                           ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5.0)),
-                        color: Colors.amber,
-                      ),
-                      child: Column(
-                        children: [],
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5.0)),
-                        color: Colors.amber,
-                      ),
-                      child: Column(
-                        children: [],
-                      ),
-                    ),
-                  ),
-                ],
+                        )),
+                    options: CarouselOptions(
+                      viewportFraction: 0.8,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                      enlargeFactor: 0.3,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _current = index;
+                        });
+                      },
+                      //onPageChanged: callbackFunction,
+                      scrollDirection: Axis.horizontal,
+                    ))),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: provider.a.data.asMap().entries.map((entry) {
+            return GestureDetector(
+              onTap: () => _controller.animateToPage(entry.key),
+              child: Container(
+                width: 12.0,
+                height: 12.0,
+                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: (Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.blueAccent)
+                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
               ),
+            );
+          }).toList(),
+        ),
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.all(5.0),
+            child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(0.0),
+              crossAxisSpacing: 5.0,
+              crossAxisCount: 3,
+              children: <Widget>[
+                Center(
+                  child: InkWell(
+                    onTap: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OfficeLists(),
+                          ))
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5.0))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.work,
+                            color: Colors.white,
+                            size: 30.0,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          Text(
+                            'Offices',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.0),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0)),
+                      color: Colors.amber,
+                    ),
+                    child: Column(
+                      children: [],
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0)),
+                      color: Colors.amber,
+                    ),
+                    child: Column(
+                      children: [],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
