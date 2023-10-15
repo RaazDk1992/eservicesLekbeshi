@@ -69,7 +69,7 @@ class _CarouselScreenState extends State<CarouselScreen> {
                             CachedNetworkImage(
                                 imageUrl: provider.a.data[index].slider_image),
                             Positioned(
-                              top: 200,
+                              top: 220,
                               left: 0.0,
                               right: 0.0,
                               child: Container(
@@ -82,8 +82,9 @@ class _CarouselScreenState extends State<CarouselScreen> {
                                   provider.a.data[index].Title,
                                   style: TextStyle(
                                     // color: Colors.white,
-                                    fontSize: 20.0,
+                                    fontSize: 15.0,
                                     fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.transparent,
                                   ),
                                 ),
                               ),
@@ -92,6 +93,7 @@ class _CarouselScreenState extends State<CarouselScreen> {
                         )),
                     options: CarouselOptions(
                       viewportFraction: 0.8,
+                      height: 300,
                       initialPage: 0,
                       enableInfiniteScroll: true,
                       reverse: false,
