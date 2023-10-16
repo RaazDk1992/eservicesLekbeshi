@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lekbeshimuneservices/screens/info.dart';
 import 'package:lekbeshimuneservices/screens/office_list.dart';
 import 'package:lekbeshimuneservices/workers/carousel_provider.dart';
 import 'package:lekbeshimuneservices/workers/fetch_offices.dart';
@@ -59,58 +60,62 @@ class _CarouselScreenState extends State<CarouselScreen> {
 
     return Column(
       children: [
-        Consumer(
-            builder: (context, CarouselProvider carouselProvider, child) =>
-                CarouselSlider.builder(
-                    itemCount: provider.a.data.length,
-                    carouselController: _controller,
-                    itemBuilder: ((context, index, realIndex) => Stack(
-                          children: [
-                            CachedNetworkImage(
-                                imageUrl: provider.a.data[index].slider_image),
-                            Positioned(
-                              top: 200,
-                              left: 0.0,
-                              right: 0.0,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(3, 66, 129, 0.7),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 20.0),
-                                child: Text(
-                                  provider.a.data[index].Title,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor: Colors.transparent,
+        SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Consumer(
+              builder: (context, CarouselProvider carouselProvider, child) =>
+                  CarouselSlider.builder(
+                      itemCount: provider.a.data.length,
+                      carouselController: _controller,
+                      itemBuilder: ((context, index, realIndex) => Stack(
+                            children: [
+                              CachedNetworkImage(
+                                  imageUrl:
+                                      provider.a.data[index].slider_image),
+                              Positioned(
+                                top: 200,
+                                left: 0.0,
+                                right: 0.0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color.fromRGBO(3, 66, 129, 0.7),
+                                  ),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 20.0),
+                                  child: Text(
+                                    provider.a.data[index].Title,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                      backgroundColor: Colors.transparent,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        )),
-                    options: CarouselOptions(
-                      viewportFraction: 0.8,
-                      height: 250,
-                      initialPage: 0,
-                      enableInfiniteScroll: true,
-                      reverse: false,
-                      autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
-                      autoPlayCurve: Curves.fastOutSlowIn,
-                      enlargeCenterPage: true,
-                      enlargeFactor: 0.3,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          _current = index;
-                        });
-                      },
-                      //onPageChanged: callbackFunction,
-                      scrollDirection: Axis.horizontal,
-                    ))),
+                            ],
+                          )),
+                      options: CarouselOptions(
+                        viewportFraction: 0.8,
+                        height: 250,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.3,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _current = index;
+                          });
+                        },
+                        //onPageChanged: callbackFunction,
+                        scrollDirection: Axis.horizontal,
+                      ))),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: provider.a.data.asMap().entries.map((entry) {
@@ -131,84 +136,7 @@ class _CarouselScreenState extends State<CarouselScreen> {
           }).toList(),
         ),
         Expanded(
-          child: Container(
-            margin: EdgeInsets.all(5.0),
-            child: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(0.0),
-              crossAxisSpacing: 5.0,
-              crossAxisCount: 3,
-              children: <Widget>[
-                Center(
-                  child: InkWell(
-                    onTap: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OfficeLists(),
-                          ))
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(5.0))),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.work,
-                            color: Colors.white,
-                            size: 30.0,
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            'Offices',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.0),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
-                      color: Colors.amber,
-                    ),
-                    child: Column(
-                      children: [],
-                    ),
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
-                      color: Colors.amber,
-                    ),
-                    child: Column(
-                      children: [],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          child: PalikaInfo(),
         ),
       ],
     );
