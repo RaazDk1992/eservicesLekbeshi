@@ -2,16 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:lekbeshimuneservices/models/articles_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:lekbeshimuneservices/models/carousel_model.dart';
+import 'package:lekbeshimuneservices/models/palika_info.dart';
 
 class InfoProvider with ChangeNotifier {
-  static const String end_point = "https://lekbeshimun.gov.np/slider-api";
+  static const String end_point = "https://lekbeshimun.gov.np/palika_info-api";
   bool is_loading = true;
   String error = '';
   bool errorStatus = false;
-  Carousels a = Carousels(data: []);
+  PalikaInfo a = PalikaInfo(data: []);
 
   String getErrorMessage() {
     return error;
@@ -26,7 +25,7 @@ class InfoProvider with ChangeNotifier {
       if (r.statusCode == 200) {
         Map<String, dynamic> map1 = {'data': jsonDecode(r.body)};
 
-        a = slidesFromJson(jsonEncode(map1));
+        a = infoFromJson(jsonEncode(map1));
         //return ab;
       } else {
         error = r.statusCode.toString();
