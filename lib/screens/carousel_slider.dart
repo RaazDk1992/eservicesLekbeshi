@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lekbeshimuneservices/screens/info.dart';
-import 'package:lekbeshimuneservices/screens/office_list.dart';
 import 'package:lekbeshimuneservices/workers/carousel_provider.dart';
-import 'package:lekbeshimuneservices/workers/fetch_offices.dart';
 import 'package:provider/provider.dart';
 
 class CarouselScreen extends StatefulWidget {

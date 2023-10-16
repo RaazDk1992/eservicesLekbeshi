@@ -52,24 +52,24 @@ class Info {
   });
   final String fy;
   final String area;
-  int? bank_numbers;
-  int? total_cooperatives;
-  int? total_elderly;
-  int? total_female;
-  int? total_handicaped;
-  int? total_hospitals;
-  final int total_household;
-  int? total_male;
-  final int total_population;
-  int? total_registered_industries;
-  int? total_road_access;
-  int? total_schools;
-  int? total_water_supplied;
-  int? elderly_above_eighty;
-  int? elderly_above_eightyfive;
-  int? elderly_above_seventy;
-  int? elderly_above_seventyfive;
-  int? elderly_above_sxityfive;
+  String? bank_numbers;
+  String? total_cooperatives;
+  String? total_elderly;
+  String? total_female;
+  String? total_handicaped;
+  String? total_hospitals;
+  final String total_household;
+  String? total_male;
+  final String total_population;
+  String? total_registered_industries;
+  String? total_road_access;
+  String? total_schools;
+  String? total_water_supplied;
+  String? elderly_above_eighty;
+  String? elderly_above_eightyfive;
+  String? elderly_above_seventy;
+  String? elderly_above_seventyfive;
+  String? elderly_above_sxityfive;
 
   factory Info.fromJson(Map<String, dynamic> json) => Info(
         fy: json["fy"],
