@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:lekbeshimuneservices/screens/bubbles.dart';
 
 import 'package:lekbeshimuneservices/screens/carousel_slider.dart';
 import 'package:lekbeshimuneservices/screens/feeds_screen.dart';
@@ -22,10 +23,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int cIndex = 0;
-  final Screens = <Widget>[
-    CarouselScreen(),
-    FeedsScreen(),
-  ];
+  final Screens = <Widget>[CarouselScreen(), FeedsScreen(), MyBubbles()];
   void updateState(int index) {
     setState(() {
       cIndex = index;
